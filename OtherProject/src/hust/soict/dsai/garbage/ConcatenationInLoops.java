@@ -1,27 +1,31 @@
 package hust.soict.dsai.garbage;
 
-import java.util.Random;
-
 public class ConcatenationInLoops {
     public static void main(String[] args) {
-        Random r = new Random(123);
+        int iterations = 10000;
 
-        // Sử dụng toán tử "+"
-        long start = System.currentTimeMillis();
-        String s = "";
-        for (int i = 0; i < 65536; i++) {
-            s += r.nextInt(2); // Nối chuỗi bằng toán tử "+"
+        long startTime = System.nanoTime();
+        String result = "";
+        for (int i = 0; i < iterations; i++) {
+            result += i;
         }
-        System.out.println("Time using + operator: " + (System.currentTimeMillis() - start) + " ms");
+        long endTime = System.nanoTime();
+        System.out.println("Time taken with String (+): " + (endTime - startTime) / 1e6 + " ms");
 
-        // Sử dụng StringBuilder
-        r = new Random(123); // Reset lại Random để kết quả tương tự
-        start = System.currentTimeMillis();
+        startTime = System.nanoTime();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 65536; i++) {
-            sb.append(r.nextInt(2)); // Nối chuỗi bằng StringBuilder
+        for (int i = 0; i < iterations; i++) {
+            sb.append(i);
         }
-        s = sb.toString();
-        System.out.println("Time using StringBuilder: " + (System.currentTimeMillis() - start) + " ms");
+        endTime = System.nanoTime();
+        System.out.println("Time taken with StringBuilder: " + (endTime - startTime) / 1e6 + " ms");
+
+        startTime = System.nanoTime();
+        StringBuffer sbf = new StringBuffer();
+        for (int i = 0; i < iterations; i++) {
+            sbf.append(i);
+        }
+        endTime = System.nanoTime();
+        System.out.println("Time taken with StringBuffer: " + (endTime - startTime) / 1e6 + " ms");
     }
 }
